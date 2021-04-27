@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Security</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <ul class="navbar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()" class="nav-item">
+            <!--        <li class="nav-item">-->
+            <a class="nav-link" href="/login">LogIn</a>
+        </li>
+        <!--        <li class="nav-item">-->
+        <li sec:authorize="!isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/signup">SignUp</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+        </li>
+
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" th:href="@{|/user/${#authentication.principal.id}|}">User</a>
+        </li>
+    </ul>
+    <div sec:authorize="isAuthenticated()">
+        Welcome <span sec:authentication="name"></span></div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class=" col-md-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png">
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p th:text=${user.username}></p>
+            <p th:text=${user.firstname}></p>
+            <p th:text=${user.lastname}></p>
+            <p th:text=${user.dateOfBirth}></p>
+            <p th:text=${user.bio}></p>
+        </div>
+    </div>
+</div>
+<div class=" container">
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseEdit" role="button"
+                   aria-expanded="false" aria-controls="collapseEdit">
+                    Edit Profile Information
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container collapse" id="collapseEdit">
+        <form th:action="'/user/'+${user.id}+'?_method=PUT'" method="POST">
+            <p>Edit User Data</p>
+
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" placeholder="First Name" id="firstname" name="firstname"
+                       th:value="${user.username}">
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" placeholder="Last Name" id="lastname" name="lastname"
+                       th:value="${user.lastname}">
+            </div>
+            <div class="form-group">
+                <label for="dateofbirth">Date Of Birth:</label>
+                <input type="date" class="form-control" placeholder="Last Name" id="dateofbirth" name="dateOfBirth"
+                       th:value="${user.dateOfBirth}">
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea class="form-control" id="bio" name="bio" rows="3" th:text="${user.bio}"> </textarea>
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+    <div class="container">
+        <form action="/addPost" method="post">
+
+            <div class="form-group">
+                <label for="body"> Add Posts</label>
+                <textarea class="form-control" id="body" name="body" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="card" th:each=" post : ${user.posts}">
+            <div class="card-header">
+                <p th:text=${user.username}></p>
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p th:text=${post.body}></p>
+                    <footer class="blockquote-footer" th:text=${post.timeStamp}><cite title="Source Title">Source
+                        Title</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>
