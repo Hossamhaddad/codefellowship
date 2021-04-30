@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <ul class="navbar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li sec:authorize="!isAuthenticated()" class="nav-item">
+            <!--        <li class="nav-item">-->
+            <a class="nav-link" href="/login">LogIn</a>
+        </li>
+        <!--        <li class="nav-item">-->
+        <li sec:authorize="!isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/signup">SignUp</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/feed">Feed</a>
+        </li>
+
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" th:href="@{|/user/${#authentication.principal.id}|}">User</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/users">ALL Users</a>
+        </li>
+    </ul>
+    <div sec:authorize="isAuthenticated()" class="float-right">
+        Welcome <span sec:authentication="name"></span></div>
+</nav>
+<div class="row">
+    <div class="col-md-12">
+        <h3>All Users</h3>
+        <div class="people-nearby">
+            <div class="nearby-user" th:each="user: ${users}"  th:if="${user.id != #authentication.principal.id}">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="user" class="profile-photo-lg">
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <h5 th:text="@{|${user.firstname} ${user.lastname}|}"></h5>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <a class="btn btn-primary"  th:href="@{| /user/${user.id}|}" />View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Security</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/login">LogIn</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup">SignUp</a>
+        </li>
+    </ul>
+
+</nav>
+<div class="container">
+<form action="/signup" method="post">
+    <div class="form-group">
+        <label for="Username">Username:</label>
+        <input type="text" class="form-control" placeholder="Enter Username" id="Username" name="username">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password">
+    </div>
+    <div class="form-group">
+        <label for="firstname">First Name:</label>
+        <input type="text" class="form-control" placeholder="First Name" id="firstname" name="firstname">
+    </div>
+    <div class="form-group">
+        <label for="lastname">Last Name:</label>
+        <input type="text" class="form-control" placeholder="Last Name" id="lastname" name="lastname">
+    </div>
+    <div class="form-group">
+        <label for="dateofbirth">Date Of Birth:</label>
+        <input type="date" class="form-control" placeholder="Last Name" id="dateofbirth" name="dateOfBirth">
+    </div>
+    <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea class="form-control" id="bio" name="bio" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+
+
+
+
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>
