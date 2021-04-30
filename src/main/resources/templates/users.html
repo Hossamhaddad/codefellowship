@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 <head>
     <meta charset="UTF-8">
-    <title>Security</title>
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <title>Title</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-light">
@@ -38,23 +38,30 @@
             <a class="nav-link" href="/users">ALL Users</a>
         </li>
     </ul>
-    <div sec:authorize="isAuthenticated()">
+    <div sec:authorize="isAuthenticated()" class="float-right">
         Welcome <span sec:authentication="name"></span></div>
 </nav>
-
-    <ul>
-        <li> <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"></li>
-        <li th:text=${user.username}></li>
-        <li th:text=${user.firstname}></li>
-        <li th:text=${user.lastname}></li>
-        <li th:text=${user.dateOfBirth}></li>
-        <li th:text=${user.bio}></li>
-    </ul>
-<form action="/follow" method="Post" th:if="${user.id != #authentication.principal.id}">
-    <input type="hidden" class="form-control" placeholder="Enter Username"  name="id" th:value="${user.id}">
-<button type="submit" class="btn btn-primary">follow</button>
-</form>
-
+<div class="row">
+    <div class="col-md-12">
+        <h3>All Users</h3>
+        <div class="people-nearby">
+            <div class="nearby-user" th:each="user: ${users}"  th:if="${user.id != #authentication.principal.id}">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="user" class="profile-photo-lg">
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <h5 th:text="@{|${user.firstname} ${user.lastname}|}"></h5>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <a class="btn btn-primary"  th:href="@{| /user/${user.id}|}" />View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>

@@ -12,13 +12,11 @@ public class Post {
 
     @ManyToOne
     ApplicationUser user;
-
     private String body;
     private String timeStamp;
 
+
     public Post() {
-
-
     }
 
     public Post(String body, String timeStamp, ApplicationUser user) {

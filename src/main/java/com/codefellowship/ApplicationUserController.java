@@ -14,6 +14,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class ApplicationUserController {
@@ -97,6 +99,34 @@ public class ApplicationUserController {
             applicationUserRepository.save(loggedInUser);
             return new RedirectView("/user/"+id);
         }
+
+       @PostMapping("/follow")
+     public RedirectView follow(Principal p ,@RequestParam(value = "id") Integer id) {
+
+           String loggedInUserName = p.getName();
+           ApplicationUser loggedInUser = applicationUserRepository.findByUsername(loggedInUserName);
+           ApplicationUser following = applicationUserRepository.findById(id).get();
+           if(loggedInUser.getId()!=following.getId()) {
+               loggedInUser.user.add(following);
+               applicationUserRepository.save(loggedInUser);
+           }
+           return new RedirectView("/profile");
+       }
+    @GetMapping("/feed")
+    public String feed(Principal p ,Model m) {
+        String loggedInUserName = p.getName();
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(loggedInUserName);
+        Set<ApplicationUser> followers=loggedInUser.getUser();
+        System.out.println(followers.toString());
+                m.addAttribute("users",followers);
+        return "feed.html";
     }
+    @GetMapping("/users")
+    public String feed(Model m) {
+        m.addAttribute("users",applicationUserRepository.findAll());
+        return "users.html";
+    }
+       }
+
 
 

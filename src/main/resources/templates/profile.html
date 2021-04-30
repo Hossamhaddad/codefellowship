@@ -27,9 +27,15 @@
         <li sec:authorize="isAuthenticated()" class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
         </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/feed">Free</a>
+        </li>
 
         <li sec:authorize="isAuthenticated()" class="nav-item">
             <a class="nav-link" th:href="@{|/user/${#authentication.principal.id}|}">User</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+            <a class="nav-link" href="/users">ALL Users</a>
         </li>
     </ul>
     <div sec:authorize="isAuthenticated()">

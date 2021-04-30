@@ -5,7 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -20,6 +22,21 @@ public class ApplicationUser implements UserDetails {
     private String lastname;
     private String dateOfBirth;
     private String bio;
+
+
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="following",
+            joinColumns={@JoinColumn(name="user_id")},
+            inverseJoinColumns={@JoinColumn(name="following_id")})
+    public Set<ApplicationUser> user = new HashSet<ApplicationUser>();
+
+    public Set<ApplicationUser> getUser() {
+        return user;
+    }
+
+    public void setUser(Set<ApplicationUser> user) {
+        this.user=user;
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Post> posts;
