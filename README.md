@@ -1,6 +1,6 @@
 # codefellowship
 
-## lab 16 + 17 Spring Auth
+## lab 16 + 17 +18 + 19 Spring Auth
 
 ### Using spring i created 6 templates :
 
@@ -19,3 +19,7 @@
 ### 7. /logout : a route that takes makes the user log out of his account only registerd users can reach this route .
 
 ### 8. /user/id: a route that takes the user to page where he can see other users data , only registered users can reach this route .
+
+### 9. /users : a route takes the user to a page where he can find all the app useres and add them .
+
+### 10. /feed : a route that takes the user to apage to view all the followed user posts .
